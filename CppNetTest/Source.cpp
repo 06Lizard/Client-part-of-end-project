@@ -1,6 +1,7 @@
 #include <iostream>
 #include <winsock2.h>
 #include <Ws2tcpip.h> // Include the necessary header for InetPton
+#include <string>
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -23,7 +24,7 @@ int main() {
     serverAddr.sin_port = htons(12345); // Use the same port as the server
 
     // Convert IP address from string to binary form
-    if (InetPton(AF_INET, TEXT("192.168.68.81"), &serverAddr.sin_addr) != 1) {
+    if (InetPton(AF_INET, TEXT("192.168.174.63"), &serverAddr.sin_addr) != 1) {
         std::cerr << "Invalid IP address\n";
         closesocket(clientSocket);
         WSACleanup();
@@ -37,13 +38,25 @@ int main() {
         return 1;
     }
 
-    const char* message = "Hello world";
-    if (send(clientSocket, message, strlen(message), 0) == SOCKET_ERROR) {
-        std::cerr << "Error sending data: " << WSAGetLastError() << "\n";
+    while (true)
+    {
+        std::string str;
+        std::cin >> str;
+        if (send(clientSocket, str.c_str(), strlen(str.c_str()), 0) == SOCKET_ERROR) 
+        {
+            std::cerr << "Error sending data: " << WSAGetLastError() << "\n";
+            break;
+        }
+        else 
+        {
+            std::cout << "Message sent successfully\n";
+        }
+        Sleep(1000);
     }
-    else {
-        std::cout << "Message sent successfully\n";
-    }
+
+    std::cout << "Press enter to exit" << std::endl;
+    Sleep(1000);
+    std::cin.get();
 
     closesocket(clientSocket);
     WSACleanup();
