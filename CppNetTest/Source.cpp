@@ -4,8 +4,15 @@
 #include <string>
 
 #pragma comment(lib, "ws2_32.lib")
-
+int test();
 int main() {
+    while (true)
+    {
+        test();
+        Sleep(5000);
+    }
+}
+int test(){
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
         std::cerr << "WSAStartup failed\n";
@@ -24,7 +31,7 @@ int main() {
     serverAddr.sin_port = htons(12345); // Use the same port as the server
 
     // Convert IP address from string to binary form
-    if (InetPton(AF_INET, TEXT("192.168.174.63"), &serverAddr.sin_addr) != 1) {
+    if (InetPton(AF_INET, TEXT("10.151.190.93"), &serverAddr.sin_addr) != 1) {
         std::cerr << "Invalid IP address\n";
         closesocket(clientSocket);
         WSACleanup();
@@ -38,25 +45,26 @@ int main() {
         return 1;
     }
 
-    while (true)
-    {
+    //while (true)
+    //{
         std::string str;
-        std::cin >> str;
+        //std::cin >> str;
+        str = "incoming";
         if (send(clientSocket, str.c_str(), strlen(str.c_str()), 0) == SOCKET_ERROR) 
         {
             std::cerr << "Error sending data: " << WSAGetLastError() << "\n";
-            break;
+            //break;
         }
         else 
         {
-            std::cout << "Message sent successfully\n";
+            std::cout << "Message sent successfully\n";            
         }
         Sleep(1000);
-    }
+    //}
 
     std::cout << "Press enter to exit" << std::endl;
-    Sleep(1000);
-    std::cin.get();
+    //Sleep(1000);
+    //std::cin.get();
 
     closesocket(clientSocket);
     WSACleanup();
