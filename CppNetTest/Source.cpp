@@ -31,7 +31,7 @@ int test(){
     serverAddr.sin_port = htons(12345); // Use the same port as the server
 
     // Convert IP address from string to binary form
-    if (InetPton(AF_INET, TEXT("10.151.190.93"), &serverAddr.sin_addr) != 1) {
+    if (InetPton(AF_INET, TEXT("127.0.0.1"), &serverAddr.sin_addr) != 1) {
         std::cerr << "Invalid IP address\n";
         closesocket(clientSocket);
         WSACleanup();
