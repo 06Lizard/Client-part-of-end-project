@@ -1,17 +1,18 @@
-#include "Send.h"
+#include "Client.h"
 
-bool Send::ConnectToServer(std::string server_ip, int port)
+// Returning 1 or WSAGetLastError is error, 0 is not error.
+int Client::ConnectToServer(std::string server_ip, int port)
 {
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
         std::cerr << "WSAStartup failed\n";
-        return false;
+        return 1;
     }
 
     if (clientSocket == INVALID_SOCKET) {
         std::cerr << "Error creating socket: " << WSAGetLastError() << "\n";
         WSACleanup();
-        return false;
+        return WSAGetLastError();
     }
     
     sockaddr_in serverAddr;
@@ -22,42 +23,38 @@ bool Send::ConnectToServer(std::string server_ip, int port)
     std::wstring widestr = std::wstring(server_ip.begin(), server_ip.end());
     if (InetPton(AF_INET, widestr.c_str(), &serverAddr.sin_addr) != 1) // Convert IP address from string to binary form
     {
-        std::cerr << "Invalid IP address\n";
+        std::cerr << "Invalid IP address\n" << std::endl;
         closesocket(clientSocket);
         WSACleanup();
-        return false;
+        return 1;
     }
 
     if (connect(clientSocket, reinterpret_cast<sockaddr*>(&serverAddr), sizeof(serverAddr)) == SOCKET_ERROR) {
-        std::cerr << "Error connecting to server: " << WSAGetLastError() << "\n";
+        std::cerr << "Error connecting to server: " << WSAGetLastError() << std::endl;
         closesocket(clientSocket);
         WSACleanup();
-        return false;
+        return WSAGetLastError();
     }
     else
     {
         std::cout << "Connected to server" << std::endl;
     }
-    return false;
+    return 0;
 }
 
-bool Send::SendMSG(std::string message)
+int Client::SendMSG(std::string message)
 {
     if (send(clientSocket, message.c_str(), strlen(message.c_str()), 0) == SOCKET_ERROR)
     {
-        std::cerr << "Error sending data: " << WSAGetLastError() << "\n";
-        return false;
+        std::cerr << "Error sending data: " << WSAGetLastError() << " with the message '" << message << "'" << std::endl;
+        return WSAGetLastError();
     }
     else
     {
-        std::cout << "Message sent successfully\n";
+        std::cout << "Message sent successfully\n" << std::endl;
     }
-
-    std::cout << "Press enter to exit" << std::endl;
-    Sleep(1000);
-    std::cin.get();
 
     closesocket(clientSocket);
     WSACleanup();
-    return true;
+    return 0;
 }

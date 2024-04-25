@@ -1,14 +1,23 @@
 #include <iostream>
 #include <string>
-#include "Send.h"
+#include "Client.h"
 
 //#pragma comment(lib, "ws2_32.lib")
 
 int main() 
 {
-	std::string message;
-	std::cin >> message;
+	std::string message = "balls";
 
-	Send* test = new Send("192.168.174.63", 12345);
-	test->SendMSG(message);
+	Client* testClient = new Client("192.168.174.63", 12345);
+	
+	// Attempt sending message 3 times, break out of loop if successfully sent
+	for (int i = 0; i < 3; i++) 
+	{
+		std::cout << "Sent message: " << i + 1 << std::endl;
+		if (testClient->SendMSG(message) == 0) 
+		{
+			std::cout << "Successfully sent" << std::endl;
+			break;
+		}
+	}
 }
