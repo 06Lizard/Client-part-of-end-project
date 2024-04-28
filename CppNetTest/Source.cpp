@@ -59,10 +59,10 @@ int test(){
         {
             std::cout << "Message sent successfully\n";            
         }
-        Sleep(1000);
+        //Sleep(1000);
     //}
 
-    std::cout << "Press enter to exit" << std::endl;
+    //std::cout << "Press enter to exit" << std::endl;
     //Sleep(1000);
     //std::cin.get();
 
