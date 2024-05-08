@@ -45,24 +45,33 @@ int Client::ConnectToServer(std::string server_ip, int port)
     return 0;
 }
 
-int Client::SendMSG(std::string message, short timesToTrySendingMessage)
+// Returns 0 if successfully sent
+int Client::SendMSG(std::string message)
 {
-    for (short i = 0; i > timesToTrySendingMessage; i++)
+    if (send(clientSocket, message.c_str(), strlen(message.c_str()), 0) == SOCKET_ERROR)
     {
-        std::cout << "Tried sending message " + i + 1 << std::endl;
-        if (send(clientSocket, message.c_str(), strlen(message.c_str()), 0) == SOCKET_ERROR)
-        {
-            std::cerr << "Error sending data: " << WSAGetLastError() << " with the message '" << message << "'" << std::endl;
-            return WSAGetLastError();
-        }
-        else
-        {
-            std::cout << "Message sent successfully\n" << std::endl;
-            break; // Break out of loop if successfully sent
-        }
+        std::cerr << "Error sending data: " << WSAGetLastError() << " with the message '" << message << "'" << std::endl;
+        return WSAGetLastError();
+    }
+    else
+    {
+        std::cout << "Message sent successfully\n" << std::endl;
     }
 
     closesocket(clientSocket);
     WSACleanup();
     return 0;
+}
+
+int Client::SendMSG(std::string message, short timesToTrySendingMessage)
+{
+    for (short i = 0; i > timesToTrySendingMessage; i++)
+    {
+        std::cout << "Tried sending message " + i + 1 << " times" << std::endl;
+        if (SendMSG(message) == 0)
+        {
+            return 0; // Returning 0 means successfully sent
+        }
+    }
+    return 1; // Returning 1 means failed to send
 }

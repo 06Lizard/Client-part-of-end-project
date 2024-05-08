@@ -11,4 +11,5 @@ int main()
 	Client* testClient = new Client("192.168.174.63", 12345);
 	
 	testClient->SendMSG(message, 3);
+	testClient->SendMSG("Hej");
 }
