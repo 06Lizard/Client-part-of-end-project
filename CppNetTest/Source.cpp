@@ -12,4 +12,5 @@ int main()
 	
 	testClient->SendMSG(message, 3);
 	testClient->SendMSG("Hej");
+	testClient->CloseSocket();
 }

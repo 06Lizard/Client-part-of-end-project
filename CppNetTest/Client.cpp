@@ -45,6 +45,12 @@ int Client::ConnectToServer(std::string server_ip, int port)
     return 0;
 }
 
+void Client::CloseSocket()
+{
+    closesocket(clientSocket);
+    WSACleanup();
+}
+
 // Returns 0 if successfully sent
 int Client::SendMSG(std::string message)
 {
@@ -56,20 +62,25 @@ int Client::SendMSG(std::string message)
     else
     {
         std::cout << "Message sent successfully\n" << std::endl;
+        return 0;
     }
-
-    closesocket(clientSocket);
-    WSACleanup();
-    return 0;
 }
 
 int Client::SendMSG(std::string message, short timesToTrySendingMessage)
 {
+    // In case the user inputs a negative number or zero
+    if (timesToTrySendingMessage < 1)
+    {
+        timesToTrySendingMessage = 1;
+    }
+
+    // Loop x amount of times to try sending the message. Exits the loop once successfully sent. 
     for (short i = 0; i > timesToTrySendingMessage; i++)
     {
         std::cout << "Tried sending message " + i + 1 << " times" << std::endl;
         if (SendMSG(message) == 0)
         {
+            break;
             return 0; // Returning 0 means successfully sent
         }
     }
