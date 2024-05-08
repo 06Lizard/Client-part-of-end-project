@@ -4,12 +4,14 @@
 int Client::ConnectToServer(std::string server_ip, int port)
 {
     WSADATA wsaData;
-    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) 
+    {
         std::cerr << "WSAStartup failed\n";
         return 1;
     }
 
-    if (clientSocket == INVALID_SOCKET) {
+    if (clientSocket == INVALID_SOCKET) 
+    {
         std::cerr << "Error creating socket: " << WSAGetLastError() << "\n";
         WSACleanup();
         return WSAGetLastError();
@@ -29,7 +31,8 @@ int Client::ConnectToServer(std::string server_ip, int port)
         return 1;
     }
 
-    if (connect(clientSocket, reinterpret_cast<sockaddr*>(&serverAddr), sizeof(serverAddr)) == SOCKET_ERROR) {
+    if (connect(clientSocket, reinterpret_cast<sockaddr*>(&serverAddr), sizeof(serverAddr)) == SOCKET_ERROR) 
+    {
         std::cerr << "Error connecting to server: " << WSAGetLastError() << std::endl;
         closesocket(clientSocket);
         WSACleanup();
@@ -42,16 +45,21 @@ int Client::ConnectToServer(std::string server_ip, int port)
     return 0;
 }
 
-int Client::SendMSG(std::string message)
+int Client::SendMSG(std::string message, short timesToTrySendingMessage)
 {
-    if (send(clientSocket, message.c_str(), strlen(message.c_str()), 0) == SOCKET_ERROR)
+    for (short i = 0; i > timesToTrySendingMessage; i++)
     {
-        std::cerr << "Error sending data: " << WSAGetLastError() << " with the message '" << message << "'" << std::endl;
-        return WSAGetLastError();
-    }
-    else
-    {
-        std::cout << "Message sent successfully\n" << std::endl;
+        std::cout << "Tried sending message " + i + 1 << std::endl;
+        if (send(clientSocket, message.c_str(), strlen(message.c_str()), 0) == SOCKET_ERROR)
+        {
+            std::cerr << "Error sending data: " << WSAGetLastError() << " with the message '" << message << "'" << std::endl;
+            return WSAGetLastError();
+        }
+        else
+        {
+            std::cout << "Message sent successfully\n" << std::endl;
+            break; // Break out of loop if successfully sent
+        }
     }
 
     closesocket(clientSocket);
