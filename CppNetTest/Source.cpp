@@ -8,7 +8,7 @@ int main()
 {
 	std::string message = "balls";
 
-	Client* testClient = new Client("192.168.174.63", 12345);
+	Client* testClient = new Client("127.0.0.1", 12345);
 	
 	testClient->SendMSG(message, 3);
 	testClient->SendMSG("Hej");

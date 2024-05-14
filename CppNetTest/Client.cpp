@@ -6,15 +6,24 @@ int Client::ConnectToServer(std::string server_ip, int port)
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) 
     {
-        std::cerr << "WSAStartup failed\n";
+        std::cerr << "WSAStartup failed" << std::endl;
         return 1;
     }
+    else
+    {
+        std::cout << "WSAStartup succeeded" << std::endl;
+    }
 
+    clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (clientSocket == INVALID_SOCKET) 
     {
         std::cerr << "Error creating socket: " << WSAGetLastError() << "\n";
         WSACleanup();
         return WSAGetLastError();
+    }
+    else
+    {
+        std::cout << "Creating socket succeeded" << std::endl;
     }
     
     sockaddr_in serverAddr;
@@ -29,6 +38,10 @@ int Client::ConnectToServer(std::string server_ip, int port)
         closesocket(clientSocket);
         WSACleanup();
         return 1;
+    }
+    else
+    {
+        std::cout << "Valid ip adress" << std::endl;
     }
 
     if (connect(clientSocket, reinterpret_cast<sockaddr*>(&serverAddr), sizeof(serverAddr)) == SOCKET_ERROR) 
@@ -61,7 +74,7 @@ int Client::SendMSG(std::string message)
     }
     else
     {
-        std::cout << "Message sent successfully\n" << std::endl;
+        std::cout << "Message sent successfully" << std::endl;
         return 0;
     }
 }
@@ -75,7 +88,7 @@ int Client::SendMSG(std::string message, short timesToTrySendingMessage)
     }
 
     // Loop x amount of times to try sending the message. Exits the loop once successfully sent. 
-    for (short i = 0; i > timesToTrySendingMessage; i++)
+    for (short i = 0; i < timesToTrySendingMessage; i++)
     {
         std::cout << "Tried sending message " + i + 1 << " times" << std::endl;
         if (SendMSG(message) == 0)

@@ -7,7 +7,7 @@
 class Client
 {
 private:
-	SOCKET clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	SOCKET clientSocket;
 	int ConnectToServer(std::string server_ip, int port);
 
 public:
