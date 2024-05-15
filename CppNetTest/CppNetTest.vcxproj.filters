@@ -21,7 +21,10 @@
     <ClCompile Include="SocketHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MessageHandler.cpp">
+    <ClCompile Include="Client.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,7 +35,7 @@
     <ClInclude Include="SocketHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MessageHandler.h">
+    <ClInclude Include="UI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

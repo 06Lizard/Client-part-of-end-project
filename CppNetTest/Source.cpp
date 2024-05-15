@@ -2,17 +2,23 @@
 #include <iostream>
 #include <string>
 #include "Client.h"
+#include "UI.h"
 
 
 //#pragma comment(lib, "ws2_32.lib")
 
 int main() 
 {
-	std::string message = "balls";
+	/*std::string message = "balls";
 
 	Client* testClient = new Client("127.0.0.1", 12345);
 
 	testClient->SendMSG(message, 3);
-	testClient->SocketHandler::CloseSocket();
+	testClient->ListenForMessage();*/
+	
+
+	UI* ui = new UI();
+	ui->Run();
+
 	Sleep(10000000);
 }

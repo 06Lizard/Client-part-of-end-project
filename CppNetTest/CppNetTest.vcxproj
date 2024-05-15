@@ -128,14 +128,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="MessageHandler.cpp" />
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="SocketHandler.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
-    <ClInclude Include="MessageHandler.h" />
     <ClInclude Include="SocketHandler.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
