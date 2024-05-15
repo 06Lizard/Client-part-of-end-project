@@ -14,8 +14,8 @@ int Client::ConnectToServer(std::string server_ip, int port)
         std::cout << "WSAStartup succeeded" << std::endl;
     }
 
-    clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (clientSocket == INVALID_SOCKET) 
+    serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (serverSocket == INVALID_SOCKET) 
     {
         std::cerr << "Error creating socket: " << WSAGetLastError() << "\n";
         WSACleanup();
@@ -35,7 +35,7 @@ int Client::ConnectToServer(std::string server_ip, int port)
     if (InetPton(AF_INET, widestr.c_str(), &serverAddr.sin_addr) != 1) // Convert IP address from string to binary form
     {
         std::cerr << "Invalid IP address\n" << std::endl;
-        closesocket(clientSocket);
+        closesocket(serverSocket);
         WSACleanup();
         return 1;
     }
@@ -44,30 +44,42 @@ int Client::ConnectToServer(std::string server_ip, int port)
         std::cout << "Valid ip adress" << std::endl;
     }
 
-    if (connect(clientSocket, reinterpret_cast<sockaddr*>(&serverAddr), sizeof(serverAddr)) == SOCKET_ERROR) 
+    if (connect(serverSocket, reinterpret_cast<sockaddr*>(&serverAddr), sizeof(serverAddr)) == SOCKET_ERROR) 
     {
         std::cerr << "Error connecting to server: " << WSAGetLastError() << std::endl;
-        closesocket(clientSocket);
+        closesocket(serverSocket);
         WSACleanup();
         return WSAGetLastError();
     }
     else
     {
         std::cout << "Connected to server" << std::endl;
+
+        // Start listening to new detached thread
+        std::thread listenThread(&Client::ListenForMessage, this);
+        listenThread.detach();
     }
+    
     return 0;
 }
 
+//std::thread Client::listeningThread(SOCKET serverSocket)
+//{
+//    Client client("127.0.0.1", 12345);
+//    client.ListenForMessage();
+//
+//}
+
 void Client::CloseSocket()
 {
-    closesocket(clientSocket);
+    closesocket(serverSocket);
     WSACleanup();
 }
 
 // Returns 0 if successfully sent
 int Client::SendMSG(std::string message)
 {
-    if (send(clientSocket, message.c_str(), strlen(message.c_str()), 0) == SOCKET_ERROR)
+    if (send(serverSocket, message.c_str(), strlen(message.c_str()), 0) == SOCKET_ERROR)
     {
         std::cerr << "Error sending data: " << WSAGetLastError() << " with the message '" << message << "'" << std::endl;
         return WSAGetLastError();
@@ -90,7 +102,7 @@ int Client::SendMSG(std::string message, short timesToTrySendingMessage)
     // Loop x amount of times to try sending the message. Exits the loop once successfully sent. 
     for (short i = 0; i < timesToTrySendingMessage; i++)
     {
-        std::cout << "Tried sending message " + i + 1 << " times" << std::endl;
+        std::cout << "Tried sending message " << i + 1 << " times" << std::endl;
         if (SendMSG(message) == 0)
         {
             break;
@@ -98,4 +110,36 @@ int Client::SendMSG(std::string message, short timesToTrySendingMessage)
         }
     }
     return 1; // Returning 1 means failed to send
+}
+
+void Client::ListenForMessage()
+{
+    char buffer[1024]; // Buffer to store incoming messages
+    int bytesReceived;
+
+    while (true) // Loops to keep listening
+    {
+        bytesReceived = recv(serverSocket, buffer, sizeof(buffer) - 1, 0);
+
+        if (bytesReceived > 0)
+        {
+            buffer[bytesReceived] = '\0';
+            std::cout << "Message received from server: " << buffer << std::endl;
+        }
+        //std::cout << "waiting for message" << std::endl;
+        //else if (bytesReceived == 0)
+        //{
+        //    std::cout << "Lost connection to server." << std::endl;
+        //    break; // Exit the loop if the connection is closed
+        //}
+        //else
+        //{
+        //    std::cerr << "Error receiving data: " << WSAGetLastError() << std::endl;
+        //    break;
+        //}
+        //Sleep(333);
+    }
+
+    // Clean up resources after exiting the loop
+    CloseSocket();
 }

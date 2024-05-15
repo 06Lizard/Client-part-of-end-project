@@ -11,6 +11,6 @@ int main()
 	Client* testClient = new Client("127.0.0.1", 12345);
 	
 	testClient->SendMSG(message, 3);
-	testClient->SendMSG("Hej");
 	testClient->CloseSocket();
+	Sleep(10000000);
 }
