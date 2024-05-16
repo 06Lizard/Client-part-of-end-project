@@ -7,9 +7,9 @@ void UI::ChatBox()
 	std::cout << "- - - - - - CHAT - - - - - -" << "\n" << std::endl;
 	while (true)
 	{
+		client->ListenForMessage();
 		std::cin >> message;
 		client->SendMSG(message);
-		client->ListenForMessage();
 		std::cin.get();
 	}
 }
