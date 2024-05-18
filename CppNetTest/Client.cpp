@@ -43,28 +43,45 @@ std::future<int> Client::SendMSG(std::string message, short timesToTrySendingMes
 std::future<int> Client::ListenForMessage()
 {
     return std::async(std::launch::async, [this]() -> int {
-            char buffer[1024]; // Buffer to store incoming messages
-            int bytesReceived;
+        char buffer[1024]; // Buffer to store incoming messages
+        int bytesReceived;
 
-            bytesReceived = recv(serverSocket, buffer, sizeof(buffer) - 1, 0);
+        bytesReceived = recv(serverSocket, buffer, sizeof(buffer) - 1, 0);
 
-            //std::cout << "Listening for messages" << std::endl;
+        if (bytesReceived > 0)
+        {
+            buffer[bytesReceived] = '\0';
+            std::string messageString(buffer); // Convert char buffer into a string
 
-            if (bytesReceived > 0)
+            size_t delimiterPos = messageString.find(':');
+            if (delimiterPos != std::string::npos) 
             {
-                buffer[bytesReceived] = '\0';
-                std::cout << ">> " << buffer << std::endl;
-                return 0;
+                // Divides the split string into two different ones for clarity
+                std::string username = messageString.substr(0, delimiterPos);
+                std::string messageText = messageString.substr(delimiterPos + 1);
+
+                // Make the username one color, then reset to default color and print the text 
+                SetColor(1);
+                std::cout << username << " >> ";
+                ResetColor();
+                std::cout << messageText << std::endl;
             }
-            else if (bytesReceived == 0)
+            else 
             {
-                std::cout << "lost connection to server." << std::endl;
-                return 1;
+                std::cerr << "Message did not include a username followed by ':'. The message:" << messageString << std::endl;
             }
-            else
-            {
-                std::cerr << "Error receiving listening data: " << WSAGetLastError() << std::endl;
-                return 1;
-            }
-        });
+
+            return 0;
+        }
+        else if (bytesReceived == 0)
+        {
+            std::cout << "Lost connection to server." << std::endl;
+            return 1;
+        }
+        else
+        {
+            std::cerr << "Error receiving listening data: " << WSAGetLastError() << std::endl;
+            return 1;
+        }
+    });
 }

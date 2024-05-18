@@ -9,27 +9,52 @@
 
 
 std::string typeMSG();
-int main() 
+void signup(Client* client, std::string usern, std::string pas);
+void login(Client* client, std::string usern, std::string pas);
+
+
+
+int main()
 {
-	//std::string message = "balls";
+    Client* testClient = new Client("127.0.0.1", 12345);
 
-	Client* testClient = new Client("127.0.0.1", 12345);
-
-	while (true) {
-		testClient->ListenForMessage();
-		//Sleep(5000);
-		testClient->SendMSG(typeMSG());
-	}
+    UI* ui = new UI();
+    ui->Run();
 
 
-	//UI* ui = new UI();
-	//ui->Run();
+    //signup(testClient, "walter", "123");
+    ////login(testClient, "walter", "123");
 
-	//Sleep(10000000);
+    //while (true) {
+    //    testClient->ListenForMessage();
+    //    testClient->SendMSG(typeMSG());
+    //}
 }
 
 std::string typeMSG() {
-	std::string msg;
-	std::cin >> msg;
-	return msg;
+    std::string msg;
+    std::cin >> msg;
+    return msg;
+}
+
+void signup(Client* client, std::string usern, std::string pas) {
+    client->ListenForMessage();
+    client->SendMSG("signup");
+    client->ListenForMessage();
+    client->SendMSG("usern");
+    client->ListenForMessage();
+    client->SendMSG("pas");
+    client->ListenForMessage();
+    client->SendMSG("pas");
+    client->ListenForMessage();
+}
+
+void login(Client* client, std::string usern, std::string pas) {
+    client->ListenForMessage();
+    client->SendMSG("login");
+    client->ListenForMessage();
+    client->SendMSG("usern");
+    client->ListenForMessage();
+    client->SendMSG("pas");
+    client->ListenForMessage();
 }

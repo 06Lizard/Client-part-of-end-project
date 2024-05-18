@@ -1,10 +1,10 @@
 #pragma once
 #include "SocketHandler.h"
 #include <future>
-#include <future>
+#include "Colors.h"
 
 //#pragma comment(lib, "ws2_32.lib")
-class Client:public SocketHandler
+class Client:public SocketHandler, public Colors
 {
 private:
 
@@ -35,4 +35,3 @@ public:
 	/// <returns></returns>
 	std::future<int> SendMSG(std::string message, short timesToTrySendingMessage);
 };
-
