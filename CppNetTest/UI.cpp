@@ -9,6 +9,7 @@ void UI::ChatBox()
 	while (running)
 	{
 		std::cin >> message;
+		client->ListenForMessage();
 		client->SendMSG(message);
 		std::cin.get();
 	}
@@ -22,13 +23,4 @@ UI::UI()
 void UI::Run()
 {
 	ChatBox();
-}
-
-std::future<int> UI::Recive() 
-{
-	return std::async(std::launch::async, [this]() -> int {
-		while (running)
-			client->ListenForMessage();
-		return 0;
-	});
 }

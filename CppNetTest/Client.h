@@ -1,5 +1,7 @@
 #pragma once
 #include "SocketHandler.h"
+#include <future>
+#include <future>
 
 //#pragma comment(lib, "ws2_32.lib")
 class Client:public SocketHandler
@@ -7,7 +9,7 @@ class Client:public SocketHandler
 private:
 
 public:
-	int ListenForMessage();
+	std::future<int> ListenForMessage();
 
 	/// <summary>
 	/// Input the server's ip adress and port number.
@@ -24,13 +26,13 @@ public:
 	/// </summary>
 	/// <param name="message"></param>
 	/// <returns></returns>
-	int SendMSG(std::string message);
+	std::future<int> SendMSG(std::string message);
 
 	/// <summary>
 	/// Input string message and times to try sending. Returns 0 if successfully sent. 
 	/// </summary>
 	/// <param name="message"></param>
 	/// <returns></returns>
-	int SendMSG(std::string message, short timesToTrySendingMessage);
+	std::future<int> SendMSG(std::string message, short timesToTrySendingMessage);
 };
 
