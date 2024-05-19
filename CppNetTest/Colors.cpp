@@ -23,7 +23,7 @@ Color codes for SetColor()
 
 void Colors::SetColor(int textColor, int backgroundColor)
 {
-	// Avoiding errors in case someone were to input an invalid color code
+	// Avoiding errors in case someone were to input an invalid color code.
 	if ((0 <= textColor && textColor <= 15) && (0 <= backgroundColor && backgroundColor <= 15))
 	{
 		int color = textColor + (backgroundColor << 4);
@@ -33,7 +33,7 @@ void Colors::SetColor(int textColor, int backgroundColor)
 
 void Colors::SetColor(int textColor)
 {
-	// 0 is black (default bg color);
+	// 0 is black (default bg color).
 	SetColor(textColor, 0);
 }
 

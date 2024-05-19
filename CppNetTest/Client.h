@@ -2,7 +2,7 @@
 #include "SocketHandler.h"
 #include <future>
 #include "MessagesInterface.h"
-// Gets colors from SocketHandler.h
+// Gets colors from SocketHandler.h.
 
 class Client : public SocketHandler, public MessagesInterface
 {
@@ -22,7 +22,7 @@ public:
 	/// <param name="port"></param>
 	Client(std::string server_ip, int port) // Constructor	
 	{
-		ConnectToServer(server_ip, port); // Connect to the server when an instance of the class is created
+		ConnectToServer(server_ip, port); // Connect to the server when an instance of the class is created.
 	}
 
 	/// <summary>

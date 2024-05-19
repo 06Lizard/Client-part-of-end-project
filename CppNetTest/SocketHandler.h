@@ -1,9 +1,8 @@
 #pragma once
 #include <iostream>
 #include <winsock2.h>
-#include <Ws2tcpip.h> // Include the necessary header for InetPton
+#include <Ws2tcpip.h> // Necessary header for InetPton.
 #include <string>
-#include <thread>
 #include "Colors.h"
 
 class SocketHandler: public Colors
@@ -21,7 +20,7 @@ protected:
 
 public:
 	/// <summary>
-	/// Closes the socket
+	/// Closes the socket.
 	/// </summary>
 	void CloseSocket();
 

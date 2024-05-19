@@ -2,7 +2,7 @@
 #include <string>
 #include <future>
 
-// This class specifies what has to be included in other classes.
+// This class specifies what has to be included in classes that inherit from this one. 
 class MessagesInterface {
 public:
     virtual ~MessagesInterface() {} // Deconstructor
