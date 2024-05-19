@@ -39,26 +39,26 @@ void Colors::SetColor(int textColor)
 
 void Colors::ResetColor()
 {
-	SetColor(7, 0);
+	SetColor(7, 0); // White and black
 }
 
 void Colors::PrintError(std::string error)
 {
-	SetColor(12);
+	SetColor(12); // Red
 	std::cerr << error << std::endl;
     ResetColor();
 }
 
 void Colors::PrintWarning(std::string warning)
 {
-	SetColor(6);
+	SetColor(6); // Yellow
 	std::cout << warning << std::endl;
 	ResetColor();
 }
 
 void Colors::PrintSuccessful(std::string successful)
 {
-	SetColor(10);
+	SetColor(10); // Green
 	std::cout << successful << std::endl;
 	ResetColor();
 }

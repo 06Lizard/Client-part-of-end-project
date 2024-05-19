@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="Client.h" />
     <ClInclude Include="Colors.h" />
+    <ClInclude Include="MessagesInterface.h" />
     <ClInclude Include="SocketHandler.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>

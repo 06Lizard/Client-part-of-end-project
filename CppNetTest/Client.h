@@ -1,10 +1,10 @@
 #pragma once
 #include "SocketHandler.h"
 #include <future>
-
+#include "MessagesInterface.h"
 // Gets colors from SocketHandler.h
 
-class Client : public SocketHandler
+class Client : public SocketHandler, public MessagesInterface
 {
 private:
 
@@ -16,7 +16,7 @@ public:
 	std::future<int> ListenForMessage();
 
 	/// <summary>
-	/// Input the server's ip adress and port number.
+	/// Input the server's ip address and port number.
 	/// </summary>
 	/// <param name="server_ip"></param>
 	/// <param name="port"></param>

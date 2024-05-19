@@ -1,3 +1,4 @@
+#pragma once
 #include "UI.h"
 
 void UI::ChatBox()
@@ -23,17 +24,17 @@ void UI::LogIn()
 	running = true;
 	system("cls"); // Clear console
 	std::string message;
-	SetColor(0, 7);
+	SetColor(0, 7); // Black text, white background
 	std::cout << "- - - - - - Log In / Sign Up - - - - - -" << "\n" << std::endl;
 	ResetColor();
 
 	while (running)
 	{
-		messageListenReturn = client->ListenForMessage().get();
+		messageListenReturn = client->ListenForMessage().get(); // Get the number the function returns and set the variable to it
 		switch (messageListenReturn)
 		{
 		case 2:
-			ChatBox();
+			ChatBox(); // If ListenForMessage() returns 2, then the user has logged in and will enter the chat
 			break;
 
 		case 3:
@@ -46,19 +47,19 @@ void UI::LogIn()
 			break;
 		}
 
+		// Reads input, and sends it to the server
 		std::getline(std::cin, message);
 		client->SendMSG(message);
 	}
-}
-
-UI::UI()
-{
-
 }
 
 void UI::Run()
 {
 	Sleep(3000);
 	LogIn();
-	//ChatBox();
+}
+
+UI::UI()
+{
+
 }

@@ -21,7 +21,7 @@ protected:
 	void SetColor(int textColor);
 
 	/// <summary>
-	/// Sets the color to default.
+	/// Sets the color to default (white text, black bg).
 	/// </summary>
 	void ResetColor();
 
