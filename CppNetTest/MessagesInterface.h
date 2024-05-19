@@ -3,7 +3,8 @@
 #include <future>
 
 // This class specifies what has to be included in classes that inherit from this one. 
-class MessagesInterface {
+class MessagesInterface 
+{
 public:
     virtual ~MessagesInterface() {} // Deconstructor
 
