@@ -4,8 +4,10 @@
 
 // This class specifies what has to be included in classes that inherit from this one. 
 class MessagesInterface {
-protected:
+public:
     virtual ~MessagesInterface() {} // Deconstructor
+
+protected:
 
     // Functions for sending messages.
     virtual std::future<int> SendMSG(std::string message) = 0;
