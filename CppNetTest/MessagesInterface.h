@@ -4,7 +4,7 @@
 
 // This class specifies what has to be included in classes that inherit from this one. 
 class MessagesInterface {
-public:
+protected:
     virtual ~MessagesInterface() {} // Deconstructor
 
     // Functions for sending messages.
