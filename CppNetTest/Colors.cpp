@@ -41,3 +41,24 @@ void Colors::ResetColor()
 {
 	SetColor(7, 0);
 }
+
+void Colors::PrintError(std::string error)
+{
+	SetColor(12);
+	std::cerr << error << std::endl;
+    ResetColor();
+}
+
+void Colors::PrintWarning(std::string warning)
+{
+	SetColor(6);
+	std::cout << warning << std::endl;
+	ResetColor();
+}
+
+void Colors::PrintSuccessful(std::string successful)
+{
+	SetColor(10);
+	std::cout << successful << std::endl;
+	ResetColor();
+}

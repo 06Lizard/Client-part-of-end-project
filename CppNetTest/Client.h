@@ -1,14 +1,18 @@
 #pragma once
 #include "SocketHandler.h"
 #include <future>
-#include "Colors.h"
 
-//#pragma comment(lib, "ws2_32.lib")
-class Client:public SocketHandler, public Colors
+// Gets colors from SocketHandler.h
+
+class Client : public SocketHandler
 {
 private:
 
 public:
+	/// <summary>
+	/// Awaits incoming messages. 
+	/// </summary>
+	/// <returns></returns>
 	std::future<int> ListenForMessage();
 
 	/// <summary>

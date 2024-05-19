@@ -1,30 +1,30 @@
 #pragma once
 #include "SocketHandler.h"
 
-int SocketHandler::ConnectToServer(std::string server_ip, int port)
+int SocketHandler::ConnectToServer(std::string server_ip, short port)
 {
     // Returning 1 or WSAGetLastError is error, 0 is not error.
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
     {
-        std::cerr << "WSAStartup failed" << std::endl;
+        PrintError("WSASttartup failed.");
         return 1;
     }
     else
     {
-        std::cout << "WSAStartup succeeded" << std::endl;
+        PrintSuccessful("WSAStartup succeeded.");
     }
 
     serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (serverSocket == INVALID_SOCKET)
     {
-        std::cerr << "Error creating socket: " << WSAGetLastError() << "\n";
+        PrintError("Error creating socket: " + std::to_string(WSAGetLastError()));
         WSACleanup();
         return WSAGetLastError();
     }
     else
     {
-        std::cout << "Creating socket succeeded" << std::endl;
+        PrintSuccessful("Creating socket succeded.");
     }
 
     sockaddr_in serverAddr;
@@ -35,26 +35,26 @@ int SocketHandler::ConnectToServer(std::string server_ip, int port)
     std::wstring widestr = std::wstring(server_ip.begin(), server_ip.end());
     if (InetPton(AF_INET, widestr.c_str(), &serverAddr.sin_addr) != 1) // Convert IP address from string to binary form
     {
-        std::cerr << "Invalid IP address\n" << std::endl;
+        PrintError("Invalid IP address.");
         closesocket(serverSocket);
         WSACleanup();
         return 1;
     }
     else
     {
-        std::cout << "Valid ip adress" << std::endl;
+        PrintSuccessful("Valid IP address.");
     }
 
     if (connect(serverSocket, reinterpret_cast<sockaddr*>(&serverAddr), sizeof(serverAddr)) == SOCKET_ERROR)
     {
-        std::cerr << "Error connecting to server: " << WSAGetLastError() << std::endl;
+        PrintError("Error connecting to server: " + std::to_string(WSAGetLastError()));
         closesocket(serverSocket);
         WSACleanup();
         return WSAGetLastError();
     }
     else
     {
-        std::cout << "Connected to server" << std::endl;
+        PrintSuccessful("Successfully connected to server.");
     }
 
     return 0;
@@ -64,4 +64,12 @@ void SocketHandler::CloseSocket()
 {
     closesocket(serverSocket);
     WSACleanup();
+}
+
+// Should work but doesn't for whatever reason. Don't use. 
+void SocketHandler::Reconnect(std::string server_ip, short port)
+{
+    CloseSocket();
+    WSACleanup();
+    ConnectToServer(server_ip, port);
 }
