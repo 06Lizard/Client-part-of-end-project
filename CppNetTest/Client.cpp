@@ -16,7 +16,7 @@ std::future<int> Client::SendMSG(std::string message)
         }
         else
         {
-            PrintSuccessful("Message sent successfully.");
+            //PrintSuccessful("Message sent successfully.");
             return 0;
         }
     });
