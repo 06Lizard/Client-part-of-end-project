@@ -18,7 +18,6 @@ protected:
 	/// <returns></returns>
 	int ConnectToServer(std::string server_ip, short port);
 
-public:
 	/// <summary>
 	/// Closes the socket.
 	/// </summary>

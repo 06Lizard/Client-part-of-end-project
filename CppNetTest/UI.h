@@ -20,11 +20,8 @@ private:
 	void LogIn();
 
 public:
-	UI(); // Constructor (unused)
-
 	/// <summary>
 	/// Start the program.
 	/// </summary>
 	void Run();
-
 };

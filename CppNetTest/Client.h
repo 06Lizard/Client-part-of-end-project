@@ -6,8 +6,6 @@
 
 class Client : public SocketHandler, public MessagesInterface
 {
-private:
-
 public:
 	/// <summary>
 	/// Awaits incoming messages. 

@@ -38,6 +38,10 @@ void UI::LogIn()
 			break;
 
 		case 3:
+			LogIn(); // Takes the user to the login page after having signed up. 
+			break;
+
+		case 4:
 			PrintWarning("[Press any key to attempt reconnecting.]");
 			std::cin.get();
 			Reconnect("127.0.0.1", 12345); // Doesn't work, unable to retrieve data after successfully reconnecting. 
@@ -57,9 +61,4 @@ void UI::Run()
 {
 	Sleep(3000);
 	LogIn();
-}
-
-UI::UI()
-{
-
 }
