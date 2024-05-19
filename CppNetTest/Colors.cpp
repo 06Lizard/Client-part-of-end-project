@@ -26,7 +26,8 @@ void Colors::SetColor(int textColor, int backgroundColor)
 	// Avoiding errors in case someone were to input an invalid color code.
 	if ((0 <= textColor && textColor <= 15) && (0 <= backgroundColor && backgroundColor <= 15))
 	{
-		int color = textColor + (backgroundColor << 4);
+		// Moves the bits of bg color 4 steps to the left to combine the colors in a way that the compiler can can read both the bg and text color from the same int. 
+		int color = textColor + (backgroundColor << 4); 
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 	}
 }
