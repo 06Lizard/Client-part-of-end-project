@@ -1,7 +1,6 @@
 #pragma once
 #include "SocketHandler.h"
 #include <future>
-#include <future>
 
 //#pragma comment(lib, "ws2_32.lib")
 class Client:public SocketHandler

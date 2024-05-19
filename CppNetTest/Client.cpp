@@ -12,7 +12,7 @@ std::future<int> Client::SendMSG(std::string message)
         }
         else
         {
-            //std::cout << "Message sent successfully" << std::endl;
+            std::cout << "Message sent successfully" << std::endl;
             return 0;
         }
         });
@@ -43,28 +43,28 @@ std::future<int> Client::SendMSG(std::string message, short timesToTrySendingMes
 std::future<int> Client::ListenForMessage()
 {
     return std::async(std::launch::async, [this]() -> int {
-            char buffer[1024]; // Buffer to store incoming messages
-            int bytesReceived;
+        char buffer[1024]; // Buffer to store incoming messages
+        int bytesReceived;
 
-            bytesReceived = recv(serverSocket, buffer, sizeof(buffer) - 1, 0);
+        bytesReceived = recv(serverSocket, buffer, sizeof(buffer) - 1, 0);
 
-            //std::cout << "Listening for messages" << std::endl;
+        //std::cout << "Listening for messages" << std::endl;
 
-            if (bytesReceived > 0)
-            {
-                buffer[bytesReceived] = '\0';
-                std::cout << ">> " << buffer << std::endl;
-                return 0;
-            }
-            else if (bytesReceived == 0)
-            {
-                std::cout << "lost connection to server." << std::endl;
-                return 1;
-            }
-            else
-            {
-                std::cerr << "Error receiving listening data: " << WSAGetLastError() << std::endl;
-                return 1;
-            }
+        if (bytesReceived > 0)
+        {
+            buffer[bytesReceived] = '\0';
+            std::cout << ">> " << buffer << std::endl;
+            return 0;
+        }
+        else if (bytesReceived == 0)
+        {
+            std::cout << "lost connection to server." << std::endl;
+            return 1;
+        }
+        else
+        {
+            std::cerr << "Error receiving listening data: " << WSAGetLastError() << std::endl;
+            return 1;
+        }
         });
 }

@@ -11,7 +11,6 @@ void UI::ChatBox()
 		std::cin >> message;
 		client->ListenForMessage();
 		client->SendMSG(message);
-		std::cin.get();
 	}
 }
 
