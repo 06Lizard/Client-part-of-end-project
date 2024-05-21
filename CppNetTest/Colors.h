@@ -2,8 +2,9 @@
 #include <iostream>
 #include <windows.h>
 #include <string>
+#include "DataManager.h"
 
-class Colors 
+class Colors : public DataManager
 {
 protected:
 	/// <summary>

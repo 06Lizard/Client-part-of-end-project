@@ -47,6 +47,7 @@ void Colors::PrintError(std::string error)
 {
 	SetColor(12); // Red
 	std::cerr << error << std::endl;
+	LogMessage("->  " + error);
     ResetColor();
 }
 
@@ -54,6 +55,7 @@ void Colors::PrintWarning(std::string warning)
 {
 	SetColor(6); // Yellow
 	std::cout << warning << std::endl;
+	LogMessage("->  "  + warning);
 	ResetColor();
 }
 
@@ -61,5 +63,6 @@ void Colors::PrintSuccessful(std::string successful)
 {
 	SetColor(10); // Green
 	std::cout << successful << std::endl;
+	LogMessage("->  " + successful);
 	ResetColor();
 }
