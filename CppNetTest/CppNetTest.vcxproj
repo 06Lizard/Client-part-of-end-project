@@ -24,6 +24,7 @@
     <ProjectGuid>{f020a2ed-e545-4336-a072-73f5b23eccbc}</ProjectGuid>
     <RootNamespace>CppNetTest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Client-part-of-end-project</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
