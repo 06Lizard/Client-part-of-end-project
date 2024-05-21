@@ -17,6 +17,7 @@ std::future<int> Client::SendMSG(std::string message)
         else
         {
             //PrintSuccessful("Message sent successfully.");
+            LogMessage("User >> " + message);
             return 0;
         }
     });
@@ -72,6 +73,7 @@ std::future<int> Client::ListenForMessage()
                 std::cout << " >> ";
                 ResetColor();
                 std::cout << messageText << std::endl;
+                LogMessage(username + " >> " + messageText);
             }
             else // If a colon wasn't found, it is a message from the server. Then manually add "Server >>" with the right colors. 
             {
@@ -82,6 +84,7 @@ std::future<int> Client::ListenForMessage()
                 std::cout << " >> ";
                 ResetColor();
                 std::cout << messageString << std::endl;
+                LogMessage("Server >> " + messageString);
             }
 
             /*
