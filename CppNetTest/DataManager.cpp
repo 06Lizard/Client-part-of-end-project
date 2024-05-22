@@ -13,4 +13,3 @@ void DataManager::LogMessage(const std::string& data)
         logFile << data << std::endl;
     }
 }
-

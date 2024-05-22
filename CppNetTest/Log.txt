@@ -1,0 +1,9 @@
+->  WSAStartup succeeded.
+->  Creating socket succeeded.
+->  Valid IP address.
+->  Successfully connected to server.
+Server >> Type 'login' to login to server, type 'signup' to sign up.
+User >> login
+Server >> Login initiated, enter username.
+User >> walter
+Server >> User found, enter password.

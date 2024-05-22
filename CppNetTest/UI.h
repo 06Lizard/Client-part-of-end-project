@@ -7,7 +7,7 @@ class UI : public SocketHandler
 {
 private:
 	bool running;
-	Client* client = new Client("127.0.0.1", 12345);
+	Client* client = new Client("192.168.115.63", 12345);
 
 	/// <summary>
 	/// Brings the user to the chat screen.
